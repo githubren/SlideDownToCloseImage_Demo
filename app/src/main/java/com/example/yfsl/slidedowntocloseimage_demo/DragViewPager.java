@@ -49,8 +49,11 @@ public class DragViewPager extends ViewPager implements View.OnClickListener {
     }
 
     private void init(Context context) {
+        //获取屏幕高度
         screenHeight = ScreenUtils.getScreenHeight(context);
-        setBackgroundColor(Color.BLACK);
+        //设置viewpager背景色为灰色
+        setBackgroundColor(Color.GRAY);
+        //设置viewpager滑动监听
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -59,41 +62,46 @@ public class DragViewPager extends ViewPager implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int i) {
-
+                currentPageStatus = i;
             }
 
             @Override
             public void onPageScrollStateChanged(int i) {
-                currentPageStatus = i;
+
             }
         });
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (getAdapter() instanceof ImagePagerAdapter){
-            ImagePagerAdapter adapter = (ImagePagerAdapter) getAdapter();
-            SubsamplingScaleImageView mImage = adapter.getItem(getCurrentItem()).getView().findViewById(R.id.picture);
-            switch (ev.getAction()){
-                case MotionEvent.ACTION_DOWN:
-                    Log.e("TAG","onInterceptTouchEvent:ACTION_DOWN");
-                    mDownX = ev.getRawX();
-                    mDownY = ev.getRawY();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    Log.e("TAG","onInterceptTouchEvent:ACTION_MOVE");
-                    if (mImage.getCenter() != null && mImage.getCenter().y <= mImage.getHeight()/mImage.getScale()/2){
-                        int deltax = Math.abs((int)(ev.getRawX() - mDownX));
-                        int deltay = (int)(ev.getRawY() - mDownY);
-                        if (deltay > DRAF_GAP_PX && deltax <= DRAF_GAP_PX){//往下移动超过临界，左右移动不超过临界时，拦截滑动事件
-                            return true;
-                        }
-                    }
-                    break;
-            }
-        }
-        return super.onInterceptTouchEvent(ev);
-    }
+//    /**
+//     * 事件拦截
+//     * @param ev
+//     * @return
+//     */
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        if (getAdapter() instanceof ImagePagerAdapter){
+//            ImagePagerAdapter adapter = (ImagePagerAdapter) getAdapter();
+//            SubsamplingScaleImageView mImage = adapter.getItem(getCurrentItem()).getView().findViewById(R.id.picture);
+//            switch (ev.getAction()){
+//                case MotionEvent.ACTION_DOWN:
+//                    Log.e("TAG","onInterceptTouchEvent:ACTION_DOWN");
+//                    mDownX = ev.getRawX();
+//                    mDownY = ev.getRawY();
+//                    break;
+//                case MotionEvent.ACTION_MOVE:
+//                    Log.e("TAG","onInterceptTouchEvent:ACTION_MOVE");
+//                    if (mImage.getCenter() != null && mImage.getCenter().y <= mImage.getHeight()/mImage.getScale()/2){
+//                        int deltax = Math.abs((int)(ev.getRawX() - mDownX));
+//                        int deltay = (int)(ev.getRawY() - mDownY);
+//                        if (deltay > DRAF_GAP_PX && deltax <= DRAF_GAP_PX){//往下移动超过临界，左右移动不超过临界时，拦截滑动事件
+//                            return true;
+//                        }
+//                    }
+//                    break;
+//            }
+//        }
+//        return super.onInterceptTouchEvent(ev);
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
