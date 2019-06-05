@@ -21,14 +21,19 @@ public class ShowPictureActivity extends AppCompatActivity {
     private Map<Integer,Fragment> fragments;
     private List<Integer> imageIds;
     private int id;
+    private ImageInfo imageInfo;
 
-    public int getArgus(){
+    public void getArgus(){
         Intent intent = getIntent();
         if (intent != null){
-            id = intent.getIntExtra("id",0);
+//            id = intent.getIntExtra("id",0);
+//            left = intent.getIntExtra("left",0);
+//            top = intent.getIntExtra("top",0);
+//            width = intent.getIntExtra("width",0);
+//            height = intent.getIntExtra("height",0);
+            imageInfo = intent.getParcelableExtra("imageInfo");
 //            imageIds = intent.getIntegerArrayListExtra("id_list");
         }
-        return id;
     }
 
     @Override
@@ -37,6 +42,7 @@ public class ShowPictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_showpicture);
 
         getArgus();
+        id = imageInfo.getId();
 
 //        picture = findViewById(R.id.picture_show);
         viewPager = findViewById(R.id.viewPager);
@@ -49,7 +55,7 @@ public class ShowPictureActivity extends AppCompatActivity {
         imageIds.add(R.drawable.icon_update_rocket);
         if (imageIds == null || imageIds.isEmpty()) return;
         for (int i = 0;i<imageIds.size();i++){
-            fragments.put(i,ImageFragment.getInstance(imageIds.get(i)));
+            fragments.put(i,ImageFragment.getInstance(imageInfo));
         }
 
 

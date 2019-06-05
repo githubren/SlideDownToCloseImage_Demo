@@ -10,8 +10,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.service.notification.StatusBarNotification;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,7 +27,9 @@ import com.bumptech.glide.load.engine.Resource;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 //    private Button btn;
@@ -70,8 +74,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int id) {
                 Intent intent = new Intent(MainActivity.this,ShowPictureActivity.class);
-                intent.putExtra("id",id);
+                int[] imageItemLocation = new int[2];
+                view.getLocationOnScreen(imageItemLocation);
+
+                ImageInfo imageInfo = (ImageInfo) ImageInfo.CREATOR;
+                imageInfo.setLEFT(imageItemLocation[0]);
+                imageInfo.setTOP(imageItemLocation[1]);
+                imageInfo.setWIDTH(imageWidth);
+                imageInfo.setHEIGHT(imageWidth);
+                imageInfo.setId(id);
+
+                intent.putExtra("imageInfo",imageInfo);
+//                        .putExtra("top",imageItemLocation[1])
+//                        .putExtra("width",imageWidth)
+//                        .putExtra("height",imageWidth)
+//                        .putExtra("id",id);
                 startActivity(intent);
+                //去掉自带的activity跳转动画
+                overridePendingTransition(0,0);
             }
         });
 
