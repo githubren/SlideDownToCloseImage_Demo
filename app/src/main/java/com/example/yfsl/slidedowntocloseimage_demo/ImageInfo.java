@@ -9,6 +9,18 @@ public class ImageInfo implements Parcelable {
     private int WIDTH;
     private int HEIGHT;
     private int id;
+    private int imageId;
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public ImageInfo() {
+    }
 
     protected ImageInfo(Parcel in) {
         LEFT = in.readInt();
@@ -16,6 +28,7 @@ public class ImageInfo implements Parcelable {
         WIDTH = in.readInt();
         HEIGHT = in.readInt();
         id = in.readInt();
+        imageId = in.readInt();
     }
 
     public static final Creator<ImageInfo> CREATOR = new Creator<ImageInfo>() {
@@ -82,5 +95,6 @@ public class ImageInfo implements Parcelable {
         dest.writeInt(WIDTH);
         dest.writeInt(HEIGHT);
         dest.writeInt(id);
+        dest.writeInt(imageId);
     }
 }

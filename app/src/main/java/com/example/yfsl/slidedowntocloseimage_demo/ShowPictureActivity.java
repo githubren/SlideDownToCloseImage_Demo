@@ -14,6 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 显示照片的activity
+ * 采用viewpager+fragment的方式
+ * 一个fragment对应一张图片
+ */
+
 public class ShowPictureActivity extends AppCompatActivity {
 //    private ImageView picture;
     private ViewPager viewPager;
@@ -42,6 +48,7 @@ public class ShowPictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_showpicture);
 
         getArgus();
+        //获取点击的view的id
         id = imageInfo.getId();
 
 //        picture = findViewById(R.id.picture_show);
@@ -58,16 +65,21 @@ public class ShowPictureActivity extends AppCompatActivity {
             fragments.put(i,ImageFragment.getInstance(imageInfo));
         }
 
-
+        //viewpager设置adapter
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager(),fragments));
         Log.e("TAG","fragments.size = "+fragments.size());
-        //实现点击哪张图片就显示那张  而不是总从第一张开始显示
+
+        /**
+         * 实现点击哪张图片就显示那张  而不是总从第一张开始显示
+         * 在MainActivity中点击图片的时候 将其viewID传递过来
+         * 在此处对fragments集合做遍历 将两者id相同的那个fragment显示在页面上
+         */
         for (int i = 0;i<fragments.size();i++){
             if (id == i){
                 viewPager.setCurrentItem(i);
             }
         }
-
+        //viewpager设置滑动监听
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {

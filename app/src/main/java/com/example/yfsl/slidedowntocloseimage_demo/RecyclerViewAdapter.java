@@ -25,6 +25,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        //创建布局
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_show_thum_picture,viewGroup,false);
         return new ViewHoldre(view);
     }
@@ -32,12 +33,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         if (bitmaps != null && !bitmaps.isEmpty()){
+            //获取数据
             Bitmap bitmap = bitmaps.get(i);
             ((ViewHoldre)viewHolder).picture.setImageBitmap(bitmap);
             ((ViewHoldre)viewHolder).picture.setScaleType(ImageView.ScaleType.FIT_XY);
             ((ViewHoldre)viewHolder).picture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //item中包含控件的点击监听  将点击的view 和viewId用自定义接口传递出去  也可以直接在此处对点击后做处理
                     onItemClickListener.onItemClick(v,i);
                 }
             });
@@ -63,12 +66,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    /**
+     * recyclerview中没有item点击监听 所以自定义一个接口实现item的点击事件监听
+     */
     public interface OnItemClickListener{
+
         void onItemClick(View view , int id);
     }
 
     private OnItemClickListener onItemClickListener;
 
+    /**
+     * 此方法将item的点击监听暴露出去 使得在外部可以调用接口从而实现对item的点击事件监听
+     * @param onItemClickListener
+     */
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
     }

@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ShowPictureActivity"/>
+        <activity android:name=".ShowPictureActivity"
+            android:theme="@style/MyTheme"/>
     </application>
 
 </manifest>

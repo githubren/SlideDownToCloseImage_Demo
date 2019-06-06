@@ -3,7 +3,6 @@ package com.example.yfsl.slidedowntocloseimage_demo;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -14,20 +13,26 @@ import android.view.ViewGroup;
 
 import com.nineoldandroids.view.ViewHelper;
 
-public class FriendCircleView_1 extends AppCompatImageView implements GestureDetector.OnGestureListener {
+/**
+ *自定义控件显示图片
+ * 主要重写方法onTouchEvent（）对点击和下滑事件进行相应处理
+ * 并设置一个回调方法 在外部调用此方法实现点击和下滑事件发生后的功能
+ */
+
+public class FriendCircleView extends AppCompatImageView implements GestureDetector.OnGestureListener {
 
 
-    public FriendCircleView_1(Context context) {
+    public FriendCircleView(Context context) {
         super(context);
         initView(context, null, 0);
     }
 
-    public FriendCircleView_1(Context context, AttributeSet attrs) {
+    public FriendCircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context, attrs, 0);
     }
 
-    public FriendCircleView_1(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FriendCircleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context, attrs, defStyleAttr);
     }
